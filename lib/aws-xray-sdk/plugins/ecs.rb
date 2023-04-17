@@ -104,7 +104,6 @@ module XRay
 
         return {
           cloudwatch_logs: [{
-            arn: log_arn,
             log_group: log_group
           }]
         }
