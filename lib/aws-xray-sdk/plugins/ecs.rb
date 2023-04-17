@@ -80,36 +80,35 @@ module XRay
           return {}
         end
 
-        obj = {
-          cloudwatch_logs:
-          {
-            log_group: log_group
-          }
-        }
-
         labels = data["Labels"]
 
         cluster_arn = labels["com.amazonaws.ecs.cluster"]
 
         if !Aws::ARNParser.arn?(cluster_arn)
           Logging.logger.debug("cluster_arn is not set")
-          return obj
+          return {
+            cloudwatch_logs:
+            {
+              log_group: log_group
+            }
+          }
         end
 
         cluster_arn = Aws::ARNParser.parse(cluster_arn)
 
         Logging.logger.debug("cluster_arn is set to #{cluster_arn}")
 
-        log = "arn:aws:logs:#{cluster_arn.region}:#{cluster_arn.account_id}:log-group:#{log_group}:*"
+        log_arn = "arn:aws:logs:#{cluster_arn.region}:#{cluster_arn.account_id}:log-group:#{log_group}:*"
 
-        Logging.logger.debug("log arn calculated to be #{cluster_arn}")
+        Logging.logger.debug("log arn calculated to be #{log_arn}")
 
-        obj.merge({
+        return {
           cloudwatch_logs:
           {
-            arn: log
+            arn: log_arn,
+            log_group: log_group
           }
-        });
+        }
       end
 
       def self.parse_ecs_metadata(data)
