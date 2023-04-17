@@ -103,11 +103,10 @@ module XRay
         Logging.logger.debug("log arn calculated to be #{log_arn}")
 
         return {
-          cloudwatch_logs:
-          {
+          cloudwatch_logs: [{
             arn: log_arn,
             log_group: log_group
-          }
+          }]
         }
       end
 
