@@ -36,7 +36,7 @@ module XRay
 
       def self.get_metadata_with_endpoint(metadata_uri)
 
-        if metadata_uri.nil? || metadata_uri.empty?
+        if metadata_uri.nil?
           Logging.logger.warn("metadata_uri is not set")
           return {}
         else
