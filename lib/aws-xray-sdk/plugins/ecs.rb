@@ -20,7 +20,7 @@ module XRay
             if metadata_uri.nil?
               get_metadata_without_endpoint
             else
-              get_metadata_with_endpoint(metadata_uri)
+              get_metadata_with_endpoint(URI(metadata_uri))
             end
           rescue StandardError => e
             @@aws = {}
@@ -35,6 +35,14 @@ module XRay
       end
 
       def self.get_metadata_with_endpoint(metadata_uri)
+
+        if metadata_uri.nil? || metadata_uri.empty?
+          Logging.logger.warn("metadata_uri is not set")
+          return {}
+        else
+          Logger.logger.debug("metadata_uri is #{metadata_uri}")
+        end
+
         req = Net::HTTP::Get.new(metadata_uri)
 
         begin
