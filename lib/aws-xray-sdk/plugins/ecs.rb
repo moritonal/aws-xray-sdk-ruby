@@ -88,9 +88,9 @@ module XRay
           Logging.logger.debug("cluster_arn is not set")
           return {
             cloudwatch_logs:
-            {
+            [{
               log_group: log_group
-            }
+            }]
           }
         end
 
@@ -103,11 +103,10 @@ module XRay
         Logging.logger.debug("log arn calculated to be #{log_arn}")
 
         return {
-          cloudwatch_logs:
-          {
-            arn: log_arn,
-            log_group: log_group
-          }
+          cloudwatch_logs: [{
+            log_group: log_group,
+            arn: log_arn
+          }]
         }
       end
 
