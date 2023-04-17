@@ -107,7 +107,7 @@ module XRay
         obj.merge({
           cloudwatch_logs:
           {
-            arn : log_group
+            arn: log
           }
         });
       end
